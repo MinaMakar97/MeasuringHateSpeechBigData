@@ -26,5 +26,9 @@
       "css": ["hatespeech.css"],
       "js": ["hatespeech.js"]
     } 
-  ]
+  ],
+  "web_accessible_resources": [{
+    "resources": ["hatespeech.css"],
+    "matches": ["https://twitter.com/*"]
+  }]
 }
