@@ -1,6 +1,6 @@
 MutationObserver = window.MutationObserver || window.WebKitMutationObserver;
 
-let link = "http://4722-35-201-212-13.ngrok.io/query";
+let link = "http://1b08-35-201-212-13.ngrok.io/query";
 let observer = new MutationObserver(retrieveComments);
 
 let comments_predictions = {};
@@ -57,20 +57,25 @@ function createButtonHide(id_button, top, right, float, innerText, position, jus
 	createButton.style.top = top;
 	createButton.style.right = right;
 	createButton.style.float = float;
-	createButton.style.paddingLeft = "16px";
-	createButton.style.paddingRight = "16px";
+	//createButton.style.paddingLeft = "10px";
+	//createButton.style.paddingRight = "10px";
+	createButton.style.textAlign = "center";
 	createButton.style.borderBottomLeftRadius = "9999px";
 	createButton.style.borderBottomRightRadius = "9999px";
 	createButton.style.borderTopLeftRadius = "9999px";
 	createButton.style.borderTopRightRadius = "9999px";
 	createButton.style.fontWeight = "bolder";
+	createButton.style.backgroundColor = "rgb(239, 243, 244)";
+	//createButton.style.minHeight = "30px";
+	createButton.style.fontSize = "9px";
+	createButton.style.height = "20px";
+	createButton.style.width = "60px";
 	return createButton;
 }
 
 function hide_comment(nodeTweet, tweetTextElement, bool, id_comment, prediction) {
-	const createButton = createButtonHide(id_comment, "20px", "45px", "right", "Statistics", "fixed", "right");
-	createButton.style.backgroundColor = "rgb(239, 243, 244)";
-	createButton.style.minHeight = "32px";
+	const createButtonStat = createButtonHide(id_comment, "33px", "45px", "right", "Statistics", "fixed", "right");
+	const createButtonUnhide = createButtonHide(id_comment, "33px", "120px", "right", "Show", "fixed", "right");
 
 	const statisticsDiv = document.createElement("div");
 
@@ -94,7 +99,7 @@ function hide_comment(nodeTweet, tweetTextElement, bool, id_comment, prediction)
 
 	statisticsDiv.style.display = "none";
 
-	createButton.onclick = function (event) {
+	createButtonStat.onclick = function (event) {
 		const x = statisticsDiv;
 		if (x.style.display == "none") {
 			x.style.display = "inline";
@@ -108,7 +113,8 @@ function hide_comment(nodeTweet, tweetTextElement, bool, id_comment, prediction)
 			}
 		}
 	};
-	nodeTweet.appendChild(createButton);
+	nodeTweet.appendChild(createButtonStat);
+	nodeTweet.appendChild(createButtonUnhide);
 	tweetTextElement.appendChild(statisticsDiv);
 
 	var esp = document.createElement("span");
@@ -116,7 +122,7 @@ function hide_comment(nodeTweet, tweetTextElement, bool, id_comment, prediction)
 	esp.innerHTML = prediction;
 
 	let mod = document.getElementById(id_comment);
-	mod.onclick = function (event) {
+	createButtonUnhide.onclick = function (event) {
 		const pred = document.getElementById(event.target.id + "pred");
 
 		const v = document.getElementById(event.target.id);
