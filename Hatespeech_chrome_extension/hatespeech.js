@@ -1,6 +1,6 @@
 MutationObserver = window.MutationObserver || window.WebKitMutationObserver;
 
-let link = "http://1b08-35-201-212-13.ngrok.io/query";
+let link = "http://d720-34-90-51-106.ngrok.io/query";
 let observer = new MutationObserver(retrieveComments);
 
 let comments_predictions = {};
@@ -161,8 +161,8 @@ function get_prediction(id_comment, text_comment, callback) {
 
 function process_comment(element_comment, id_comment, text_comment, tweetTextElement) {
 	get_prediction(id_comment, text_comment, (prediction, bool) => {
-		const hide = prediction["MLP_with_Roberta"][0] + prediction["logisticRegression"][0] + prediction["svc_bert"][0] * 0.5; // fai cose per capire se nasconderlo
-		if (hide > 1.5) {
+		const hide = prediction["Logistic Regression Roberta"][0] + prediction["MLP Roberta"][0] + prediction["logistic Regression Bert"][0]; // fai cose per capire se nasconderlo
+		if (hide > 1.8) {
 			hide_comment(element_comment, tweetTextElement, bool, id_comment, prediction);
 		} else {
 			//tweetTextElement.style.filter = "blur(0px)";
