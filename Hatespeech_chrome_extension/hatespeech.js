@@ -1,6 +1,6 @@
 MutationObserver = window.MutationObserver || window.WebKitMutationObserver;
 
-let link = "http://d720-34-90-51-106.ngrok.io/query";
+let link = "http://c738-34-69-139-175.ngrok.io/query";
 let observer = new MutationObserver(retrieveComments);
 
 let comments_predictions = {};
@@ -57,8 +57,6 @@ function createButtonHide(id_button, top, right, float, innerText, position, jus
 	createButton.style.top = top;
 	createButton.style.right = right;
 	createButton.style.float = float;
-	//createButton.style.paddingLeft = "10px";
-	//createButton.style.paddingRight = "10px";
 	createButton.style.textAlign = "center";
 	createButton.style.borderBottomLeftRadius = "9999px";
 	createButton.style.borderBottomRightRadius = "9999px";
@@ -66,7 +64,6 @@ function createButtonHide(id_button, top, right, float, innerText, position, jus
 	createButton.style.borderTopRightRadius = "9999px";
 	createButton.style.fontWeight = "bolder";
 	createButton.style.backgroundColor = "rgb(239, 243, 244)";
-	//createButton.style.minHeight = "30px";
 	createButton.style.fontSize = "9px";
 	createButton.style.height = "20px";
 	createButton.style.width = "60px";
@@ -121,17 +118,17 @@ function hide_comment(nodeTweet, tweetTextElement, bool, id_comment, prediction)
 	esp.id = id_comment + "pred";
 	esp.innerHTML = prediction;
 
-	let mod = document.getElementById(id_comment);
 	createButtonUnhide.onclick = function (event) {
-		const pred = document.getElementById(event.target.id + "pred");
-
-		const v = document.getElementById(event.target.id);
-
-		if (mod.style.filter == "blur(0px)") {
-			mod.style.filter = "blur(5px)";
-		} else {
-			mod.style.filter = "blur(0px)";
-		}
+		let mod = document.querySelector("[data-tweet-id='" + id_comment + "']");
+		// const pred = document.getElementById(event.target.id + "pred");
+		// const v = document.getElementById(event.target.id);
+		
+		mod.querySelectorAll("span").forEach((el) => {
+			if (el.style.filter == "blur(0px)")
+				el.style.filter = "blur(5px)";
+			else
+				el.style.filter = "blur(0px)";				
+		});	
 	};
 }
 
@@ -161,10 +158,14 @@ function get_prediction(id_comment, text_comment, callback) {
 
 function process_comment(element_comment, id_comment, text_comment, tweetTextElement) {
 	get_prediction(id_comment, text_comment, (prediction, bool) => {
-		const hide = prediction["Logistic Regression Roberta"][0] + prediction["MLP Roberta"][0] + prediction["logistic Regression Bert"][0]; // fai cose per capire se nasconderlo
+		const hide = prediction["Logistic Regression Roberta"][0] + prediction["MLP Roberta"][0] + prediction["Logistic Regression Bert"][0]; // fai cose per capire se nasconderlo
 		if (hide > 1.8) {
 			hide_comment(element_comment, tweetTextElement, bool, id_comment, prediction);
 		} else {
+			let mod = document.querySelector("[data-tweet-id='" + id_comment + "']");
+			mod.querySelectorAll("span").forEach((el) => {
+				el.style.filter = "blur(0px)";				
+		});	
 			//tweetTextElement.style.filter = "blur(0px)";
 			document.getElementById(id_comment).style.filter = "blur(0px)";
 		}
@@ -177,13 +178,15 @@ function retrieveComments(mutations, observer) {
 			if (node.querySelector) {
 				const tweetTextElement = node.querySelector('[data-testid="tweetText"]');
 				if (node.getAttribute("data-testid") === "cellInnerDiv" && tweetTextElement) {
-					console.log(tweetTextElement.getElementsByTagName("span"));
-					tweetTextElement.getElementsByTagName("span")[0].style.filter = "blur(20px)";
+					//console.log(tweetTextElement.getElementsByTagName("span"));
+					tweetTextElement.querySelectorAll("span").forEach((el) => {
+						el.style.filter = "blur(5px)";						
+					});
 					const tweetLink = node.querySelector("a:has(time)").href;
 					const tweetID = tweetLink.split("/").slice(-1)[0];
-					tweetTextElement.getElementsByTagName("span")[0].id = tweetID;
+					tweetTextElement.setAttribute("data-tweet-id", tweetID);
 					const tweetText = tweetTextElement.textContent;
-					console.log("Trovato tweet", tweetID, tweetText);
+					//console.log("Trovato tweet", tweetID, tweetText);
 
 					process_comment(node, tweetID, tweetText, tweetTextElement, true);
 				}

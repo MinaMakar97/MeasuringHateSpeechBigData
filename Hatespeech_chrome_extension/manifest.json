@@ -7,17 +7,9 @@
         "service_worker": "background.js"
   },
   "icons": {
-    "16": "/images/icon_hatespeech_16x16.jpg",
-    "48": "/images/icon_hatespeech_48x48.jpg",
-    "128": "/images/icon_hatespeech_128x128.jpg"
-  },
-  "action": {
-    "default_icon": {
-      "16": "/images/icon_hatespeech_16x16.jpg",
-      "48": "/images/icon_hatespeech_48x48.jpg",
-      "128": "/images/icon_hatespeech_128x128.jpg"
-    },
-    "default_title": "Twitter hatespeech hiding"
+    "16": "icon_hatespeech_16x16.png",
+    "48": "icon_hatespeech_48x48.png",
+    "128": "icon_hatespeech_128x128.png"
   },
   "content_scripts": [
     {
