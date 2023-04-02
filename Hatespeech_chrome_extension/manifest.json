@@ -14,7 +14,7 @@
   "content_scripts": [
     {
       "run_at": "document_start",
-      "matches": ["https://twitter.com/*/status/*"],
+      "matches": ["https://twitter.com/*", "https://twitter.com/*/status/*", "https://twitter.com/realDonaldTrump"],
       "css": ["hatespeech.css"],
       "js": ["hatespeech.js"]
     } 

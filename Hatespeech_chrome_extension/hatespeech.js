@@ -1,6 +1,7 @@
 MutationObserver = window.MutationObserver || window.WebKitMutationObserver;
 
-let link = "http://c738-34-69-139-175.ngrok.io/query";
+let link = "http://07f4-35-221-219-166.ngrok.io/query";
+
 let observer = new MutationObserver(retrieveComments);
 
 let comments_predictions = {};
@@ -122,13 +123,11 @@ function hide_comment(nodeTweet, tweetTextElement, bool, id_comment, prediction)
 		let mod = document.querySelector("[data-tweet-id='" + id_comment + "']");
 		// const pred = document.getElementById(event.target.id + "pred");
 		// const v = document.getElementById(event.target.id);
-		
+
 		mod.querySelectorAll("span").forEach((el) => {
-			if (el.style.filter == "blur(0px)")
-				el.style.filter = "blur(5px)";
-			else
-				el.style.filter = "blur(0px)";				
-		});	
+			if (el.style.filter == "blur(0px)") el.style.filter = "blur(5px)";
+			else el.style.filter = "blur(0px)";
+		});
 	};
 }
 
@@ -164,8 +163,8 @@ function process_comment(element_comment, id_comment, text_comment, tweetTextEle
 		} else {
 			let mod = document.querySelector("[data-tweet-id='" + id_comment + "']");
 			mod.querySelectorAll("span").forEach((el) => {
-				el.style.filter = "blur(0px)";				
-		});	
+				el.style.filter = "blur(0px)";
+			});
 			//tweetTextElement.style.filter = "blur(0px)";
 			document.getElementById(id_comment).style.filter = "blur(0px)";
 		}
@@ -180,7 +179,7 @@ function retrieveComments(mutations, observer) {
 				if (node.getAttribute("data-testid") === "cellInnerDiv" && tweetTextElement) {
 					//console.log(tweetTextElement.getElementsByTagName("span"));
 					tweetTextElement.querySelectorAll("span").forEach((el) => {
-						el.style.filter = "blur(5px)";						
+						el.style.filter = "blur(5px)";
 					});
 					const tweetLink = node.querySelector("a:has(time)").href;
 					const tweetID = tweetLink.split("/").slice(-1)[0];
